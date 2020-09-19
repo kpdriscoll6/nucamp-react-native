@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { View, FlatList, Text } from 'react-native';
 import Loading from './LoadingComponent';
-import { CAMPSITES } from '../shared/campsites';
 
 const mapStateToProps = state => {
     return {

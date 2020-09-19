@@ -3,6 +3,7 @@ import Home from './HomeComponent';
 import Directory from './DirectoryComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
+import CampsiteInfo from "./CampsiteInfoComponent";
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator, createDrawerNavigator,DrawerItems } from 'react-navigation';
@@ -42,49 +43,55 @@ const CustomDrawerContentComponent = props => (
 
 const DirectoryNavigator = createStackNavigator(
     {
-        Directory: { screen: Directory }
+      Directory: { 
+        screen: Directory,
+        navigationOptions: ({navigation}) => ({
+          headerLeft: <Icon
+            name='list'
+            type='font-awesome'
+            iconStyle={styles.stackIcon}
+            onPress={()=>navigation.toggleDrawer()}
+          />
+        })
+      },
+      CampsiteInfo: { screen: CampsiteInfo },
     },
     {
-        navigationOptions: ({navigation}) => ({
-            headerStyle: {
-                backgroundColor: '#5637DD'
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                color: '#fff'
-            },
-            headerLeft: <Icon
-                name='list'
-                type='font-awesome'
-                iconStyle={styles.stackIcon}
-                onPress={() => navigation.toggleDrawer()}
-            />
-        })
+      initialRouteName: "Directory",
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: "#5637DD",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+      },
     }
-);
+  );
 
-const ReservationNavigator = createStackNavigator(
+  const ReservationNavigator = createStackNavigator(
     {
-        Reservation: { screen: Reservation }
+      Reservation: { screen: Reservation },
     },
     {
-        navigationOptions: ({navigation}) => ({
-            headerStyle: {
-                backgroundColor: '#5637DD'
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                color: '#fff'
-            },
-            headerLeft: <Icon
-                name='tree'
-                type='font-awesome'
-                iconStyle={styles.stackIcon}
-                onPress={() => navigation.toggleDrawer()}
-            />
-        })
+      navigationOptions: ({navigation}) => ({
+        headerStyle: {
+          backgroundColor: "#5637DD",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+        headerLeft: <Icon
+            name='tree'
+            type='font-awesome'
+            iconStyle={styles.stackIcon}
+            onPress={()=>navigation.toggleDrawer()}
+        />
+      }),
     }
-);
+  );
 
 const HomeNavigator = createStackNavigator(
     {
@@ -184,18 +191,18 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
-        Reservation: {
+        Reservation: { 
             screen: ReservationNavigator,
             navigationOptions: {
-                drawerLabel: 'Reserve Campsite',
-                drawerIcon: ({tintColor}) => (
-                    <Icon
-                        name='tree'
-                        type='font-awesome'
-                        size={24}
-                        color={tintColor}
-                    />
-                )
+              drawerLabel: 'Reserve Campsite',
+              drawerIcon: ({tintColor})=>(
+                <Icon 
+                  name='tree'
+                  type='font-awesome'
+                  size={24}
+                  color={tintColor}
+                />
+              )
             }
         },
         About: {
