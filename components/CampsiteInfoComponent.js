@@ -32,16 +32,11 @@ function RenderCampsite(props) {
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
-        const panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onPanResponderGrant: () => {
-                view.current.rubberBand(1000)
-                .then(endState => console.log(endState.finished ? 'finished' : 'canceled'));
-            },
-            onPanResponderEnd: (e, gestureState) => {
+        onPanResponderGrant: () => {
+            view.current.rubberBand(1000)
+            .then(endState => console.log(endState.finished ? 'finished' : 'canceled'));
+        },
         onPanResponderEnd: (e, gestureState) => {
-            console.log('pan responder end', gestureState);
-            if (recognizeDrag(gestureState)) {
                 Alert.alert(
                     'Add Favorite',
                     'Are you sure you wish to add ' + campsite.name + ' to favorites?',
@@ -59,7 +54,6 @@ function RenderCampsite(props) {
                     ],
                     { cancelable: false }
                 );
-            }
             return true;
         }
     });
