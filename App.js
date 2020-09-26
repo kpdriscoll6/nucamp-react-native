@@ -5,6 +5,9 @@ import { ConfigureStore } from './redux/configureStore';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import Loading from './components/LoadingComponent';
 
+//to start json server
+//json-server --watch db.json -p 3001 -d 2000 -H 0.0.0.0
+
 const { persistor, store } = ConfigureStore();
 
 export default function App() {
