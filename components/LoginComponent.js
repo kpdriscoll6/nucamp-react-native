@@ -6,6 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
+import * as ImageManipulator from "expo-image-manipulator";
 
 class LoginTab extends Component {
 
@@ -154,11 +155,28 @@ class RegisterTab extends Component {
             });
             if (!capturedImage.cancelled) {
                 console.log(capturedImage);
-                this.setState({imageUrl: capturedImage.uri});
+                this.processImage(capturedImage.uri);
             }
         }
     }
 
+    processImage = async (imgUri) => {
+        const processedImage = await ImageManipulator.manipulateAsync(imgUri,[{resize:{ width: 400 }}],{format:'png'})
+        console.log(processedImage)
+        this.setState({imageUrl: processedImage.uri}); 
+    }
+
+    getImageFromGallery = async () => {
+            const imgUri = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.All,
+              allowsEditing: true,
+              aspect: [1, 1],
+              quality: 1,
+            }
+            )
+        console.log(imgUri)
+        this.processImage(imgUri.uri);
+        }
     handleRegister() {
         console.log(JSON.stringify(this.state));
         if (this.state.remember) {
@@ -184,6 +202,10 @@ class RegisterTab extends Component {
                         <Button
                             title='Camera'
                             onPress={this.getImageFromCamera}
+                        />
+                         <Button
+                            title='Gallery'
+                            onPress={this.getImageFromGallery}
                         />
                     </View>
                     <Input
